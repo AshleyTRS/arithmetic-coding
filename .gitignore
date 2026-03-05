@@ -1,0 +1,48 @@
+# =========================
+# Build directories
+# =========================
+build/
+out/
+
+# =========================
+# CMake
+# =========================
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+
+# =========================
+# Visual Studio / MSVC
+# =========================
+*.sln
+*.vcxproj*
+*.vcproj*
+*.vcxproj.user
+*.user
+*.filters
+*.pdb
+*.idb
+*.ilk
+*.obj
+*.tlog
+*.log
+*.exe
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# Windows
+# =========================
+Thumbs.db
+Desktop.ini
+
+# =========================
+# wxWidgets local build
+# (Only ignore if it's inside project)
+# =========================
+wxWidgets/
