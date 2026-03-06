@@ -151,7 +151,7 @@ char compare(double &value, vector<Symbol> &frequency_table)
     return '\0';
 }
 
-void decode(vector<Symbol> &frequency_table, vector<Symbol> &sub_intervals, double encoded_str, double curr_low_lim, double curr_hi_lim, string &decoded_str, string s, LL depth)
+void decode(unordered_map<char, pair<double, double>> &init_intervals, vector<Symbol> &frequency_table, vector<Symbol> &sub_intervals, double encoded_str, double curr_low_lim, double curr_hi_lim, string &decoded_str, string s, LL depth)
 {
     if (depth >= s.size())
         return;
@@ -161,10 +161,17 @@ void decode(vector<Symbol> &frequency_table, vector<Symbol> &sub_intervals, doub
 
     decoded_str += symbol;
 
-    double new_low_lim = sub_intervals[depth].low_lim;
-    double new_hi_lim = sub_intervals[depth].hi_lim;
+    // double new_low_lim = sub_intervals[depth].low_lim;
+    // double new_hi_lim = sub_intervals[depth].hi_lim;
 
-    decode(frequency_table, sub_intervals, encoded_str, new_low_lim, new_hi_lim, decoded_str, s, depth + 1);
+    double sym_low = init_intervals[symbol].first;
+    double sym_high = init_intervals[symbol].second;
+
+    // recompute subinterval
+    double new_low_lim = curr_low_lim + sym_low * (curr_hi_lim - curr_low_lim);
+    double new_hi_lim = curr_low_lim + sym_high * (curr_hi_lim - curr_low_lim);
+
+    decode(init_intervals, frequency_table, sub_intervals, encoded_str, new_low_lim, new_hi_lim, decoded_str, s, depth + 1);
 }
 
 int main()
@@ -207,7 +214,7 @@ int main()
 
     string decoded_str = "";
 
-    decode(frequency_table, sub_intervals, encoded_str, 0, 1, decoded_str, s, 0);
+    decode(init_intervals, frequency_table, sub_intervals, encoded_str, 0, 1, decoded_str, s, 0);
 
     cout << "\nDecoded value: " << decoded_str << "\n";
 
